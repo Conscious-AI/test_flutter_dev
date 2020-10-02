@@ -33,7 +33,7 @@ jobs:
           name: "Conscious-AI Bot"
           email: "cai.github.bot@gmail.com"
           actor: "CAI-Bot"
-          token: '${{ secrets.GH_BOT_PASS }}'
+          token: "${{ secrets.GH_BOT_PASS }}"
       
       - name: Setting-up git repo and uploading...
         run: |
@@ -41,7 +41,7 @@ jobs:
           git init
           git config user.name "Conscious-AI Bot"
           git config user.email "cai.github.bot@gmail.com"
-          git remote add origin https://github.com/Conscious-AI/test_flutter.git
+          git remote add origin https://CAI-Bot:${{ secrets.GH_BOT_PASS }}@github.com/Conscious-AI/test_flutter.git
           git checkout
           git add .
           git commit -m "${GITHUB_REF} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${GITHUB_SHA}"
