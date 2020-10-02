@@ -27,13 +27,19 @@ jobs:
       - name: Building Application...
         run: flutter build windows
       
-      - name: Setting-up git repo...
+      - name: Configuring bot credentials...
+        uses: OleksiyRudenko/gha-git-credentials@v1
+        with:
+          name: "Conscious-AI Bot"
+          email: "cai.github.bot@gmail.com"
+          actor: "CAI-Bot"
+          token: '${{ secrets.GH_BOT_PASS }}'
+      
+      - name: Setting-up git repo and uploading...
         run: |
           cd build/windows/runner/Release/
           git init
           git remote add origin https://github.com/Conscious-AI/test_flutter.git
-          git config user.name  "CAI-Bot"
-          git config user.email "cai.github.bot@gmail.com"
           git checkout
           git add .
           git commit -m "$GITHUB_REF - Auto-Triggered Build Commit" -m "Triggering Commit SHA - $GITHUB_SHA"
