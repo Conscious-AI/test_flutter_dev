@@ -1,0 +1,40 @@
+name: Build-Release CI
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-upload:
+    runs-on: windows-latest
+    steps:
+      
+      - name: Setting-up Flutter ...
+        uses: subosito/flutter-action@v1.3.2
+        with:
+          channel: "dev"
+      
+      - name: Checking out repository ...
+        uses: actions/checkout@v2.3.3
+      
+      - name: Enabling Windows support...
+        run: flutter config --enable-windows
+      
+      - name: Installing dependencies...
+        run: flutter pub get
+      
+      - name: Building Application...
+        run: flutter build windows
+      
+      - name: Setting-up git repo...
+        run: |
+          cd build/windows/runner/Release/
+          git init
+          git remote add origin https://github.com/Conscious-AI/test_flutter.git
+          git config user.name  "CAI-Bot"
+          git config user.email "cai.github.bot@gmail.com"
+          git checkout
+          git add .
+          git commit -m "$GITHUB_REF - Auto-Triggered Build Commit" -m "Triggering Commit SHA - $GITHUB_SHA"
+          git push origin master
