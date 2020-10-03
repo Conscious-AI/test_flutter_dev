@@ -27,22 +27,20 @@ jobs:
       - name: Building Application...
         run: flutter build windows
       
-      - name: Configuring bot credentials...
-        uses: OleksiyRudenko/gha-git-credentials@v1
+      - name: Configuring bot keys...
+        uses: crazy-max/ghaction-import-gpg@v3
         with:
-          name: "Conscious-AI Bot"
-          email: "cai.github.bot@gmail.com"
-          actor: "CAI-Bot"
-          token: "${{ secrets.GH_BOT_PASS }}"
+          gpg-private-key: ${{ secrets.GH_BOT_GPG_KEY }}
+          passphrase: ${{ secrets.GH_BOT_GPG_KEY_PASS }}
+          git-user-signingkey: true
+          git-commit-gpgsign: true
       
       - name: Setting-up git repo and uploading...
         run: |
           cd build/windows/runner/Release/
           git init
-          git config user.name "Conscious-AI Bot"
-          git config user.email "cai.github.bot@gmail.com"
-          git remote add origin https://CAI-Bot:${{ secrets.GH_BOT_PASS }}@github.com/Conscious-AI/test_flutter.git
+          git remote add origin https://github.com/Conscious-AI/test_flutter.git
           git checkout
           git add .
-          git commit -m "${GITHUB_REF} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${GITHUB_SHA}"
+          git commit -sS -m "${{ github.ref }} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${{ github.sha }}"
           git push origin master
