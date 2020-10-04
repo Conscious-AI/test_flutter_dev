@@ -24,11 +24,16 @@ jobs:
       - name: Building Application...
         run: flutter build windows
       
+      - name: Configuring git repo...
+        run: |
+          cd build/windows/runner/Release/
+          git init
+          git remote add origin https://github.com/Conscious-AI/test_flutter.git
+      
       - name: Configuring bot keys...
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v3.0.1
         with:
-          workdir: build/windows/runner/Release/
           gpg-private-key: ${{ secrets.GH_BOT_GPG_KEY }}
           passphrase: ${{ secrets.GH_BOT_GPG_KEY_PASS }}
           git-user-signingkey: true
@@ -37,8 +42,7 @@ jobs:
       - name: Uploading build artifacts...
         run: |
           cd build/windows/runner/Release/
-          git init
-          git remote add origin https://github.com/Conscious-AI/test_flutter.git
+          git fetch
           git checkout
           git add .
           git commit -sS -m "${{ github.ref }} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${{ github.sha }}"
