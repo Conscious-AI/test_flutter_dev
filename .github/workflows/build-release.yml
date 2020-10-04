@@ -7,22 +7,27 @@ jobs:
     runs-on: windows-latest
     steps:
       
-#       - name: Setting-up Flutter ...
-#         uses: subosito/flutter-action@v1.3.2
-#         with:
-#           channel: "dev"
+      - name: Setting-up Flutter ...
+        uses: subosito/flutter-action@v1.3.2
+        with:
+          channel: "dev"
       
-#       - name: Checking out repository ...
-#         uses: actions/checkout@v2.3.3
+      - name: Checking out repository ...
+        uses: actions/checkout@v2.3.3
       
-#       - name: Enabling Windows support...
-#         run: flutter config --enable-windows-desktop
+      - name: Enabling Windows support...
+        run: flutter config --enable-windows-desktop
       
-#       - name: Installing dependencies...
-#         run: flutter pub get
+      - name: Installing dependencies...
+        run: flutter pub get
       
-#       - name: Building Application...
-#         run: flutter build windows
+      - name: Building Application...
+        run: flutter build windows
+      
+      - name: Switching to build directory...
+        run: |
+          cd build/windows/runner/Release/
+          git init
       
       - name: Configuring bot keys...
         id: import_gpg
@@ -33,19 +38,10 @@ jobs:
           git-user-signingkey: true
           git-commit-gpgsign: true
       
-      - name: GPG user IDs
+      - name: Uploading build artifacts...
         run: |
-          echo "fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}"
-          echo "keyid:       ${{ steps.import_gpg.outputs.keyid }}"
-          echo "name:        ${{ steps.import_gpg.outputs.name }}"
-          echo "email:       ${{ steps.import_gpg.outputs.email }}"
-      
-#       - name: Setting-up git repo and uploading...
-#         run: |
-#           cd build/windows/runner/Release/
-#           git init
-#           git remote add origin https://github.com/Conscious-AI/test_flutter.git
-#           git checkout
-#           git add .
-#           git commit -sS -m "${{ github.ref }} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${{ github.sha }}"
-#           git push origin master
+          git remote add origin https://github.com/Conscious-AI/test_flutter.git
+          git checkout
+          git add .
+          git commit -sS -m "${{ github.ref }} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${{ github.sha }}"
+          git push origin master
