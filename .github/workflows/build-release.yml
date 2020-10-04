@@ -41,7 +41,7 @@ jobs:
       
       - name: Uploading build artifacts...
         run: |
-          cd build/windows/runner/Release/
+          pwd
           git fetch
           git checkout
           git add .
