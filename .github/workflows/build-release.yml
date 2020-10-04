@@ -43,4 +43,4 @@ jobs:
           git add .
           git commit -sS -m "${{ github.ref }} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${{ github.sha }}"
           git push origin master
-        working-directory: ./build/windows/runner/Release/
+        working-directory: ./build/windows/runner/Release
