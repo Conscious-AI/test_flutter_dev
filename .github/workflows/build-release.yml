@@ -24,11 +24,6 @@ jobs:
       - name: Building Application...
         run: flutter build windows
       
-      - name: Switching to build directory...
-        run: |
-          cd build/windows/runner/Release/
-          git init
-      
       - name: Configuring bot keys...
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v3.0.1
@@ -40,6 +35,8 @@ jobs:
       
       - name: Uploading build artifacts...
         run: |
+          cd build/windows/runner/Release/
+          git init
           git remote add origin https://github.com/Conscious-AI/test_flutter.git
           git checkout
           git add .
