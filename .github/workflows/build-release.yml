@@ -28,6 +28,7 @@ jobs:
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v3.0.1
         with:
+          workdir: build/windows/runner/Release/
           gpg-private-key: ${{ secrets.GH_BOT_GPG_KEY }}
           passphrase: ${{ secrets.GH_BOT_GPG_KEY_PASS }}
           git-user-signingkey: true
