@@ -21,14 +21,12 @@ jobs:
       - name: Installing dependencies...
         run: flutter pub get
       
+      - name: Cloning repo...
+        run: |
+          git clone https://github.com/Conscious-AI/test_flutter.git build/windows/runner/Release
+      
       - name: Building Application...
         run: flutter build windows
-      
-      - name: Configuring git repo...
-        run: |
-          git init
-          git remote add origin https://github.com/Conscious-AI/test_flutter.git
-        working-directory: ./build/windows/runner/Release
       
       - name: Configuring bot keys...
         id: import_gpg
@@ -42,8 +40,6 @@ jobs:
       
       - name: Uploading build artifacts...
         run: |
-          git fetch
-          git checkout
           git add .
           git commit -sS -m "${{ github.ref }} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${{ github.sha }}"
           git push origin master
