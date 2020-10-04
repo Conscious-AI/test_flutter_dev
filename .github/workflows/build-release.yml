@@ -41,7 +41,9 @@ jobs:
       
       - name: Uploading build artifacts...
         run: |
-          pwd
+          cd build/windows/runner/Release/
+          git config user.email "cai.github.bot@gmail.com"
+          git config user.name "Conscious-AI Bot"
           git fetch
           git checkout
           git add .
