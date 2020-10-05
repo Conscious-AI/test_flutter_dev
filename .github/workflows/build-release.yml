@@ -4,7 +4,7 @@ on: push
 
 jobs:
   build-upload:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       
       - name: Setting-up Flutter ...
@@ -36,7 +36,7 @@ jobs:
           passphrase: ${{ secrets.GH_BOT_GPG_KEY_PASS }}
           git-user-signingkey: true
           git-commit-gpgsign: true
-#           workdir: ./build/windows/runner/Release
+          workdir: ./build/windows/runner/Release
       
       - name: Uploading build artifacts...
         run: |
