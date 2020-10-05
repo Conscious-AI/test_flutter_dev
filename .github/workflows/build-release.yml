@@ -36,13 +36,11 @@ jobs:
           passphrase: ${{ secrets.GH_BOT_GPG_KEY_PASS }}
           git-user-signingkey: true
           git-commit-gpgsign: true
-          workdir: ./build/windows/runner/Release
+#           workdir: ./build/windows/runner/Release
       
       - name: Uploading build artifacts...
         run: |
-          pwd
-          ls
+          cd ./build/windows/runner/Release
           git add .
           git commit -sS -m "${{ github.ref }} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${{ github.sha }}"
           git push origin master
-        working-directory: ./build/windows/runner/Release
