@@ -41,7 +41,7 @@ jobs:
       - name: Uploading build artifacts...
         run: |
           pwd
-          ls -la
+          ls
           git add .
           git commit -sS -m "${{ github.ref }} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${{ github.sha }}"
           git push origin master
