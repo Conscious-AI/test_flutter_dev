@@ -1,6 +1,6 @@
 name: Build-Release CI
 
-on: push
+on: [push]
 
 jobs:
   build-upload:
