@@ -21,9 +21,14 @@ jobs:
       - name: Installing dependencies...
         run: flutter pub get
       
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.GH_BOT_SSH_KEY }}
+      
       - name: Cloning repo...
         run: |
-          git clone https://github.com/Conscious-AI/test_flutter.git build/windows/runner/Release
+          git clone git@github.com:Conscious-AI/test_flutter.git build/windows/runner/Release
       
       - name: Building Application...
         run: flutter build windows
@@ -41,7 +46,6 @@ jobs:
       - name: Uploading build artifacts...
         run: |
           cd ./build/windows/runner/Release
-          git config --global credential.modalprompt false
           git add .
           git commit -sS -m "${{ github.ref }} - Auto-Triggered Build Commit" -m "Triggering Commit SHA - ${{ github.sha }}"
           git push origin master
